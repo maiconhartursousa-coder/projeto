@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReViver - Entrar</title>
+    <!-- Font Awesome para os ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #020b18 0%, #081b3b 100%);
+            --card-bg: rgba(8, 25, 52, 0.75);
+            --card-border: #13335e;
+            --input-bg: rgba(6, 18, 38, 0.8);
+            --input-border: #163c70;
+            --input-border-focus: #1a8cff;
+            --primary-blue: #1a8cff;
+            --primary-blue-hover: #0073e6;
+            --text-white: #ffffff;
+            --text-muted: #8aa3c7;
+            --radius-input: 12px;
+            --radius-btn: 30px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-white);
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Elemento decorativo de fundo (Planta/Lotus) */
+        .bg-leaf {
+            position: absolute;
+            right: -30px;
+            bottom: -20px;
+            width: 320px;
+            height: 320px;
+            opacity: 0.12;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .login-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 480px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Topo: Voltar e Citação */
+        .card-header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 25px;
+        }
+
+        .back-btn {
+            color: var(--text-white);
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .back-btn:hover {
+            color: var(--primary-blue);
+            background: rgba(26, 140, 255, 0.1);
+        }
+
+        .quote-box {
+            text-align: right;
+            max-width: 220px;
+            border-right: 2px solid var(--primary-blue);
+            padding-right: 10px;
+        }
+
+        .quote-box p {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            line-height: 1.3;
+        }
+
+        /* Títulos */
+        .login-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .login-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+        }
+
+        /* Formulário */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .input-box {
+            display: flex;
+            align-items: center;
+            background: var(--input-bg);
+            border: 1px solid var(--input-border);
+            border-radius: var(--radius-input);
+            padding: 0 16px;
+            height: 52px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .input-box:focus-within {
+            border-color: var(--input-border-focus);
+            box-shadow: 0 0 10px rgba(26, 140, 255, 0.25);
+        }
+
+        .input-box i.icon-left {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-right: 14px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .input-box input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text-white);
+            font-size: 0.95rem;
+            width: 100%;
+        }
+
+        .input-box input::placeholder {
+            color: #4a688f;
+        }
+
+        .toggle-password {
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 5px;
+            transition: color 0.2s;
+        }
+
+        .toggle-password:hover {
+            color: var(--text-white);
+        }
+
+        /* Opções Extras (Lembrar / Esqueceu) */
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            font-size: 0.85rem;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+
+        .remember-me input[type="checkbox"] {
+            accent-color: var(--primary-blue);
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .forgot-link {
+            color: var(--primary-blue);
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+
+        .forgot-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Botão Principal */
+        .btn-submit {
+            width: 100%;
+            height: 50px;
+            background: var(--primary-blue);
+            border: none;
+            border-radius: var(--radius-btn);
+            color: var(--text-white);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.1s;
+            box-shadow: 0 4px 15px rgba(26, 140, 255, 0.3);
+        }
+
+        .btn-submit:hover {
+            background: var(--primary-blue-hover);
+        }
+
+        .btn-submit:active {
+            transform: scale(0.99);
+        }
+
+        /* Divisor "ou" */
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 25px 0;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .divider span {
+            padding: 0 12px;
+        }
+
+        /* ===== BOTÕES SOCIAIS ===== */
+        .social-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .btn-social {
+            width: 100%;
+            height: 50px;
+            border-radius: var(--radius-btn);
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        /* Google */
+        .btn-google {
+            background: #ffffff;
+            color: #3c4043;
+            border: 1px solid #dadce0;
+        }
+
+        .btn-google:hover {
+            background: #f8f9fa;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-google i {
+            color: #ea4335;
+            font-size: 1.2rem;
+        }
+
+        /* GitHub */
+        .btn-github {
+            background: #24292f;
+            color: #ffffff;
+            border: 1px solid #30363d;
+        }
+
+        .btn-github:hover {
+            background: #32383f;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-github i {
+            font-size: 1.25rem;
+        }
+
+        /* Anônimo */
+        .btn-anonymous {
+            background: transparent;
+            border: 1px solid var(--input-border);
+            color: var(--text-white);
+        }
+
+        .btn-anonymous:hover {
+            border-color: var(--primary-blue);
+            background: rgba(26, 140, 255, 0.08);
+        }
+
+        .btn-anonymous i {
+            font-size: 1.1rem;
+        }
+
+        /* Rodapé de Cadastro */
+        .signup-footer {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .signup-footer a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .signup-footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SVG de fundo estilo folha/lótus do ReViver -->
+    <svg class="bg-leaf" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50 0C50 0 65 25 65 50C65 75 50 100 50 100C50 100 35 75 35 50C35 25 50 0 50 0Z" fill="#1a8cff"/>
+        <path d="M50 15C50 15 80 30 85 55C90 80 65 95 65 95C65 95 55 75 50 55C45 35 50 15 50 15Z" fill="#1a8cff"/>
+        <path d="M50 15C50 15 20 30 15 55C10 80 35 95 35 95C35 95 45 75 50 55C55 35 50 15 50 15Z" fill="#1a8cff"/>
+    </svg>
+
+    <div class="login-card">
+        <!-- Topo com Botão Voltar e Citação Motivacional -->
+        <div class="card-header-top">
+            <a href="#" class="back-btn" title="Voltar">
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
+            <div class="quote-box">
+                <p>Um novo começo é possível. E ele começa com você.</p>
+            </div>
+        </div>
+
+        <!-- Título -->
+        <h1 class="login-title">Entrar</h1>
+        <p class="login-subtitle">Preencha os dados abaixo para acessar sua conta.</p>
+
+        <!-- Formulário -->
+        <form id="loginForm">
+            <!-- E-mail -->
+            <div class="form-group">
+                <div class="input-box">
+                    <i class="fa-regular fa-envelope icon-left"></i>
+                    <input type="email" id="email" placeholder="Seu e-mail" required>
+                </div>
+            </div>
+
+            <!-- Senha -->
+            <div class="form-group">
+                <div class="input-box">
+                    <i class="fa-solid fa-lock icon-left"></i>
+                    <input type="password" id="password" placeholder="Sua senha" required>
+                    <i class="fa-regular fa-eye toggle-password" id="togglePassword"></i>
+                </div>
+            </div>
+
+            <!-- Opções Extras -->
+            <div class="form-options">
+                <label class="remember-me">
+                    <input type="checkbox" id="remember">
+                    <span>Lembrar-me</span>
+                </label>
+                <a href="#" class="forgot-link">Esqueceu a senha?</a>
+            </div>
+
+            <!-- Botão Entrar -->
+            <button type="submit" class="btn-submit">Entrar</button>
+        </form>
+
+        <!-- Divisor -->
+        <div class="divider">
+            <span>ou continue com</span>
+        </div>
+
+        <!-- ===== BOTÕES DE LOGIN SOCIAL ===== -->
+        <div class="social-buttons">
+
+            <!-- Google -->
+            <button type="button" class="btn-social btn-google" id="btnGoogle">
+                <i class="fa-brands fa-google"></i>
+                Entrar com Google
+            </button>
+
+            <!-- GitHub -->
+            <button type="button" class="btn-social btn-github" id="btnGithub">
+                <i class="fa-brands fa-github"></i>
+                Entrar com GitHub
+            </button>
+
+            <!-- Anônimo -->
+            <button type="button" class="btn-social btn-anonymous" id="btnAnonymous">
+                <i class="fa-solid fa-user-ninja"></i>
+                Entrar de forma anônima
+            </button>
+
+        </div>
+
+        <!-- Link para Cadastro -->
+        <div class="signup-footer">
+            Não tem uma conta? <a href="#">Criar conta</a>
+        </div>
+    </div>
+
+    <script>
+        // Lógica de Mostrar / Ocultar Senha
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+
+        togglePassword.addEventListener('click', function () {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            
+            // Alterna o ícone
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
+
+        // Submit do formulário (e-mail/senha)
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Acessando com e-mail e senha...');
+            // Aqui você colocaria a lógica real de login
+        });
+
+        // ===== LOGIN COM GOOGLE =====
+        document.getElementById('btnGoogle').addEventListener('click', function() {
+            alert('Redirecionando para o login com Google...');
+            // Exemplo de implementação real (Firebase Auth ou OAuth):
+            // window.location.href = '/auth/google';
+            // ou usando Firebase:
+            // signInWithPopup(auth, googleProvider)
+        });
+
+        // ===== LOGIN COM GITHUB =====
+        document.getElementById('btnGithub').addEventListener('click', function() {
+            alert('Redirecionando para o login com GitHub...');
+            // Exemplo de implementação real:
+            // window.location.href = '/auth/github';
+            // ou usando Firebase:
+            // signInWithPopup(auth, githubProvider)
+        });
+
+        // ===== LOGIN ANÔNIMO =====
+        document.getElementById('btnAnonymous').addEventListener('click', function() {
+            alert('Entrando de forma anônima...');
+            // Exemplo de implementação real (Firebase Auth):
+            // signInAnonymously(auth)
+            //     .then((userCredential) => {
+            //         const user = userCredential.user;
+            //         console.log('Usuário anônimo:', user.uid);
+            //     })
+        });
+    </script>
+</body>
+</html>
